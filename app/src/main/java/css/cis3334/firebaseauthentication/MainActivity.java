@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
+    //Sets up the layout and declares and authentication listener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,20 +87,22 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
-                    Log.d("CIS3334", "onAuthStateChanged:signed_in:" + user.getUid());
+                   // Log.d("CIS3334", "onAuthStateChanged:signed_in:" + user.getUid());
                 } else {
                     // User is signed out
-                    Log.d("CIS3334", "onAuthStateChanged:signed_out");
+                   // Log.d("CIS3334", "onAuthStateChanged:signed_out");
                 }
                 // ...
             }
         };
     }
+    //starts the auth listener
             @Override
             public void onStart() {
                 super.onStart();
                 mAuth.addAuthStateListener(mAuthListener);
             }
+    //ends the auth listener
     @Override
     public void onStop() {
         super.onStop();
@@ -108,52 +111,52 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+// this sets up the create account function and gives a message if the authentication of the account created fails.
     private void createAccount(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d("CIS3334", "createUserWithEmail:onComplete:" + task.isSuccessful());
+                        //Log.d("CIS3334", "createUserWithEmail:onComplete:" + task.isSuccessful());
 
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
-                            Toast.makeText(MainActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(MainActivity.this, "Authentication failed.",
+                                  //  Toast.LENGTH_SHORT).show();
                         }
 
                         // ...
                     }
                 });
     }
-
+// sets up the sign in button and sends log and toast messages if you succeed or fail.
     private void signIn(String email, String password){
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d("CIS3334", "signInWithEmail:onComplete:" + task.isSuccessful());
+                       // Log.d("CIS3334", "signInWithEmail:onComplete:" + task.isSuccessful());
 
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
-                            Log.w("CIS3334", "signInWithEmail", task.getException());
-                            Toast.makeText(MainActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            //Log.w("CIS3334", "signInWithEmail", task.getException());
+                           // Toast.makeText(MainActivity.this, "Authentication failed.",
+                               //     Toast.LENGTH_SHORT).show();
                         }
 
                         // ...
                     }
                 });
     }
-
+//simple sign out method
     private void signOut () {
         mAuth.signOut();
     }
-
+//the google sign in method
     private void googleSignIn() {
 
     }
